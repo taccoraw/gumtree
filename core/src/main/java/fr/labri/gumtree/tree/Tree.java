@@ -44,7 +44,13 @@ public class Tree {
 	private int[] lcPosStart;
 	private int[] lcPosEnd;
 	// End position
-	
+
+	// Begin location
+	private String locFile;
+	private int locLine;
+	private int locColumn;
+	// End location
+
 	// Useless it should be implemented outside
 	//TODO remove the matched attribute
 	private boolean matched;
@@ -77,6 +83,9 @@ public class Tree {
 		this.size = NO_VALUE;
 		this.pos = NO_VALUE;
 		this.length = NO_VALUE;
+		this.locFile = "(null)";
+		this.locLine = NO_VALUE;
+		this.locColumn = NO_VALUE;
 		this.matched = false;
 	}
 
@@ -109,6 +118,9 @@ public class Tree {
 		t.setMatched(this.isMatched());
 		t.setPos(this.getPos());
 		t.setLength(this.getLength());
+		t.setLocFile(this.getLocFile());
+		t.setLocLine(this.getLocLine());
+		t.setLocColumn(this.getLocColumn());
 		t.setHeight(this.getHeight());
 		t.setSize(this.getSize());
 		t.setDepth(this.getDepth());
@@ -228,6 +240,18 @@ public class Tree {
 
 	public int getPos() {
 		return pos;
+	}
+
+	public String getLocFile() {
+		return locFile;
+	}
+
+	public int getLocLine() {
+		return locLine;
+	}
+
+	public int getLocColumn() {
+		return locColumn;
 	}
 
 	public String getShortLabel() {
@@ -395,6 +419,18 @@ public class Tree {
 
 	public void setPos(int pos) {
 		this.pos = pos;
+	}
+
+	public void setLocFile(String locFile) {
+		this.locFile = locFile;
+	}
+
+	public void setLocLine(int locLine) {
+		this.locLine = locLine;
+	}
+
+	public void setLocColumn(int locColumn) {
+		this.locColumn = locColumn;
 	}
 
 	public void setSize(int size) {

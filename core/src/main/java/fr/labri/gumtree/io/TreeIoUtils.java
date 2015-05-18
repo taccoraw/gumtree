@@ -35,6 +35,9 @@ public final class TreeIoUtils {
 	private final static QName LINE_AFTER = new QName("line_after");
 	private final static QName COL_BEFORE = new QName("col_before");
 	private final static QName COL_AFTER = new QName("col_after");
+	private final static QName LOC_FILE = new QName("loc_file");
+	private final static QName LOC_LINE = new QName("loc_line");
+	private final static QName LOC_COLUMN = new QName("loc_column");
 
 	private TreeIoUtils() {
 	}
@@ -78,6 +81,15 @@ public final class TreeIoUtils {
 						int c1 = Integer.parseInt(s.getAttributeByName(COL_AFTER).getValue());
 						t.setLcPosStart(new int[] {l0, c0});
 						t.setLcPosEnd(new int[] {l1, c1});
+					}
+					
+					if (s.getAttributeByName(LOC_FILE) != null) {
+						String locFile = s.getAttributeByName(LOC_FILE).getValue();
+						int locLine = Integer.parseInt(s.getAttributeByName(LOC_LINE).getValue());
+						int locColumn = Integer.parseInt(s.getAttributeByName(LOC_COLUMN).getValue());
+						t.setLocFile(locFile);
+						t.setLocLine(locLine);
+						t.setLocColumn(locColumn);
 					}
 					
 					if (root == null) root = t;
@@ -191,6 +203,11 @@ public final class TreeIoUtils {
 			w.writeAttribute("line_after", Integer.toString(t.getLcPosEnd()[0]));
 			w.writeAttribute("col_after", Integer.toString(t.getLcPosEnd()[1]));
 		}
+		if (false && Tree.NO_VALUE != t.getLocLine()) {
+			w.writeAttribute("loc_file", t.getLocFile());
+			w.writeAttribute("loc_line", Integer.toString(t.getLocLine()));
+			w.writeAttribute("loc_column", Integer.toString(t.getLocColumn()));
+		}
 		
 		Tree o = null;
 		if (isSrc)
@@ -208,6 +225,16 @@ public final class TreeIoUtils {
 				w.writeAttribute("other_line_after", Integer.toString(o.getLcPosEnd()[0]));
 				w.writeAttribute("other_col_after", Integer.toString(o.getLcPosEnd()[1]));
 			}
+			if (false && Tree.NO_VALUE != o.getLocLine()) {
+				w.writeAttribute("other_loc_file", o.getLocFile());
+				w.writeAttribute("other_loc_line", Integer.toString(o.getLocLine()));
+				w.writeAttribute("other_loc_column", Integer.toString(o.getLocColumn()));
+			}
+			if (!Tree.NO_LABEL.equals(o.getLabel()) && !Tree.NO_LABEL.equals(t.getLabel()) && !t.getLabel().equals(o.getLabel())) {
+				w.writeAttribute("other_label", o.getLabel());
+			}
+		} else {
+			w.writeAttribute("missing_in", isSrc ? "dst" : "src");
 		}
 		
 		for (Tree c: t.getChildren())
