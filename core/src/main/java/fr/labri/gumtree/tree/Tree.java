@@ -50,6 +50,7 @@ public class Tree {
 	private int locLine;
 	private int locColumn;
 	// End location
+	private String aux;
 
 	// Useless it should be implemented outside
 	//TODO remove the matched attribute
@@ -86,6 +87,7 @@ public class Tree {
 		this.locFile = "(null)";
 		this.locLine = NO_VALUE;
 		this.locColumn = NO_VALUE;
+		this.aux = "";
 		this.matched = false;
 	}
 
@@ -252,6 +254,10 @@ public class Tree {
 
 	public int getLocColumn() {
 		return locColumn;
+	}
+
+	public String getAux() {
+		return aux;
 	}
 
 	public String getShortLabel() {
@@ -431,6 +437,10 @@ public class Tree {
 
 	public void setLocColumn(int locColumn) {
 		this.locColumn = locColumn;
+	}
+
+	public void setAux(String aux) {
+		this.aux = aux;
 	}
 
 	public void setSize(int size) {

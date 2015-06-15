@@ -38,6 +38,7 @@ public final class TreeIoUtils {
 	private final static QName LOC_FILE = new QName("loc_file");
 	private final static QName LOC_LINE = new QName("loc_line");
 	private final static QName LOC_COLUMN = new QName("loc_column");
+	private final static QName AUX = new QName("aux");
 
 	private TreeIoUtils() {
 	}
@@ -90,6 +91,10 @@ public final class TreeIoUtils {
 						t.setLocFile(locFile);
 						t.setLocLine(locLine);
 						t.setLocColumn(locColumn);
+					}
+					if (s.getAttributeByName(AUX) != null) {
+						String aux = s.getAttributeByName(AUX).getValue();
+						t.setAux(aux);
 					}
 					
 					if (root == null) root = t;
@@ -208,6 +213,7 @@ public final class TreeIoUtils {
 			w.writeAttribute("loc_line", Integer.toString(t.getLocLine()));
 			w.writeAttribute("loc_column", Integer.toString(t.getLocColumn()));
 		}
+		// w.writeAttribute("aux", t.getAux());
 		
 		Tree o = null;
 		if (isSrc)
